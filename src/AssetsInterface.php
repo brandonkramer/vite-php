@@ -23,9 +23,9 @@ interface AssetsInterface
      * 'url' => (string)
      * ]
      *
-     * @return $this
+     * @return self
      */
-    public function set(array $config): self;
+    public function register(array $config): self;
 
     /**
      * Get asset url.

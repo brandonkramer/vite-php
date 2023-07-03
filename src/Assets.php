@@ -15,15 +15,16 @@ use RuntimeException;
 /**
  * Class Assets
  *
- * @method static AssetsInterface get (string $file)
- * @method static AssetsInterface css (string $entry, string $file)
- * @method static AssetsInterface js (string $entry, string $file)
- * @method static AssetsInterface image (string $entry, string $file)
- * @method static AssetsInterface font (string $entry, string $file)
- * @method static AssetsInterface svg (string $entry, string $file)
- * @method static AssetsInterface getRoot ()
- * @method static AssetsInterface getOutDir ()
- * @method static AssetsInterface getEntry ()
+ * @method static AssetsInterface register(array $config)
+ * @method static AssetsInterface get(string $file = '')
+ * @method static AssetsInterface css(string $entry, string $file = '')
+ * @method static AssetsInterface js(string $entry, string $file = '')
+ * @method static AssetsInterface image(string $entry, string $file = '')
+ * @method static AssetsInterface font(string $entry, string $file = '')
+ * @method static AssetsInterface svg(string $entry, string $file = '')
+ * @method static AssetsInterface getRoot()
+ * @method static AssetsInterface getOutDir()
+ * @method static AssetsInterface getEntry()
  */
 class Assets
 {
@@ -35,13 +36,17 @@ class Assets
     protected static AssetsInterface $assets;
 
     /**
-     * Inject dependencies.
+     * Resolve the facade root instance.
      *
-     * @param AssetsInterface $assets
+     * @return AssetsInterface
      */
-    public function __construct(AssetsInterface $assets)
+    protected static function resolveInstance(): AssetsInterface
     {
-        static::$assets = $assets;
+        if (!isset(static::$assets)) {
+            static::$assets = new AssetsService();
+        }
+
+        return static::$assets;
     }
 
     /**
@@ -50,14 +55,16 @@ class Assets
      * @param string $method
      * @param array<string|int, mixed> $args
      *
-     * @return string
+     * @return mixed
      *
      * @throws RuntimeException
      */
-    public static function __callStatic(string $method, array $args): string
+    public static function __callStatic(string $method, array $args)
     {
-        if (!isset(static::$assets)) {
-            throw new RuntimeException('[Vite] Assets service has not been set.');
+        $instance = static::resolveInstance();
+
+        if (!isset($instance)) {
+            throw new RuntimeException('[Vite] Assets service could not be resolved.');
         }
 
         return static::$assets->{$method}(...$args);
