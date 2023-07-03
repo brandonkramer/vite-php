@@ -99,7 +99,7 @@ class AssetsService implements AssetsInterface
 
 
         $url = !empty($manifest['file'])
-            ? "{$this->url}/{$this->getOutDir()}/{$manifest['file']}"
+            ? "{$this}/{$manifest['file']}"
             : '';
 
         /**
@@ -279,5 +279,13 @@ class AssetsService implements AssetsInterface
     public function getEntry(): string
     {
         return $this->projectOutEntry ?? 'Static';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __toString()
+    {
+        return "{$this->url}/{$this->getOutDir()}";
     }
 }

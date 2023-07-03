@@ -127,4 +127,11 @@ interface AssetsInterface
      * @return string
      */
     public function getEntry(): string;
+
+    /**
+     * The full URL to the compiled files.
+     *
+     * @return string
+     */
+    public function __toString();
 }
