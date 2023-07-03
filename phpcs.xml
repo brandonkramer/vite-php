@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<ruleset name="WPStrap ruleset">
+    <description>Ruleset for WPStrap</description>
+    <file>src/</file>
+    <!-- Additional arguments. -->
+    <arg value="sp"/>
+    <arg name="basepath" value="."/>
+    <arg name="parallel" value="8"/>
+    <arg name="cache"/>
+    <arg name="extensions" value="php"/>
+
+    <!-- Check for PHP cross-version compatibility. -->
+    <config name="testVersion" value="7.4-"/>
+    <rule ref="PHPCompatibilityWP"/>
+
+    <!-- Only check php code, linters are used for checking js and css. -->
+    <arg name="extensions" value="php,inc"/>
+
+    <!-- Enable colors in report. -->
+    <arg name="colors"/>
+
+    <!-- Add source codes in the report. -->
+    <arg value="sp"/>
+
+    <!-- Tabs should represent 2 spaces. -->
+    <arg name="tab-width" value="4"/>
+
+    <!-- Run sniffs in parallel for faster results. -->
+    <arg name="parallel" value="8"/>
+
+    <!-- Support only latest 3 WP versions. -->
+    <config name="minimum_supported_wp_version" value="5.6"/>
+
+    <!-- Set minimum supported version for deprecated functions. -->
+    <rule ref="WordPress.WP.DeprecatedFunctions">
+        <properties>
+            <property name="minimum_supported_version" value="5.4"/>
+        </properties>
+    </rule>
+
+    <!-- Do we need true strict? -->
+    <rule ref="WordPress.PHP.StrictInArray.MissingTrueStrict">
+        <type>warning</type>
+        <severity>3</severity>
+    </rule>
+
+    <!-- Use PSR-12 ruleset: https://www.php-fig.org/psr/psr-12/
+         Use WordPress-Docs for documentation checks. -->
+    <rule ref="PSR12"/>
+    <rule ref="WordPress-Docs">
+        <exclude name="Squiz.Commenting.FunctionComment"/>
+    </rule>
+
+    <!-- Allow for single-line doc-blocks that we can use for type-hinting:. -->
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent">
+        <exclude name="Generic.WhiteSpace.DisallowTabIndent.TabsUsed"/>
+    </rule>
+
+    <!-- Allow for single-line doc-blocks that we can use for type-hinting:. -->
+    <rule ref="Generic.Commenting.DocComment">
+        <exclude name="Generic.Commenting.DocComment.MissingShort" />
+    </rule>
+
+    <!-- Warn about lines longer than 170 chars, and never error. -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="170"/>
+            <property name="absoluteLineLimit" value="0"/>
+            <property name="ignoreComments" value="true"/>
+        </properties>
+    </rule>
+
+    <!-- Disallow array() syntax. Use [] instead. -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
+    <!-- Remove extra spacing inside function declaration and call signature -->
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <properties>
+            <property name="equalsSpacing" value="1"/>
+            <property name="requiredSpacesAfterOpen" value="0"/>
+            <property name="requiredSpacesBeforeClose" value="0"/>
+        </properties>
+    </rule>
+
+    <!--  Make this sniff more sensitive to commented out code blocks.-->
+    <rule ref="Squiz.PHP.CommentedOutCode">
+        <properties>
+            <property name="maxPercentage" value="55"/>
+        </properties>
+    </rule>
+
+    <!-- Enforce PSR-12 style file comments. -->
+    <rule ref="Squiz.Commenting.FileComment">
+        <exclude name="Squiz.Commenting.FileComment.SpacingAfterOpen"/>
+    </rule>
+
+    <!-- Enforce camelCase -->
+    <rule ref="Squiz.NamingConventions.ValidVariableName"/>
+
+    <!-- Disallow spacing inside arrays. -->
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+
+    <!-- Private methods MUST not be prefixed with an underscore -->
+    <rule ref="Squiz.NamingConventions.ValidFunctionName.PrivateNoUnderscore">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <!-- Private properties MUST not be prefixed with an underscore -->
+    <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <!-- Ensure proper object instantiation. -->
+    <rule ref="WordPress.Classes.ClassInstantiation"/>
+
+    <!-- Useful code analysis sniffs. -->
+    <rule ref="WordPress.CodeAnalysis"/>
+
+    <!-- Date Time sniffs. -->
+    <rule ref="WordPress.DateTime"/>
+
+    <!-- Database sniffs. -->
+    <rule ref="WordPress.DB"/>
+
+    <!-- We want to ensure hook name validity, this is a coding standard for WordPress. -->
+    <rule ref="WordPress.NamingConventions.ValidHookName"/>
+    <rule ref="WordPress.NamingConventions.ValidPostTypeSlug"/>
+
+    <!-- PHP sniffs are useful. Except Yoda conditions -->
+    <rule ref="WordPress.PHP">
+        <exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
+    </rule>
+
+    <!-- Exclude the WP escape output sniff, because we are overloading it. -->
+    <rule ref="WordPress.Security">
+        <exclude name="WordPress.Security.EscapeOutput"/>
+    </rule>
+
+    <!-- I18n sniffs. -->
+    <rule ref="WordPress.Utils.I18nTextDomainFixer"/>
+
+    <!-- General WP sniffs. -->
+    <rule ref="WordPress.WP">
+        <exclude name="WordPress.WP.TimezoneChange"/>
+    </rule>
+
+    <!-- PHPCS Extra standard.
+         Normalize array brace spacing. Enforce no spaces inside arrays. -->
+    <rule ref="NormalizedArrays.Arrays.ArrayBraceSpacing"/>
+
+    <!-- Detect duplicate array keys in array declarations. -->
+    <rule ref="Universal.Arrays.DuplicateArrayKey"/>
+
+    <!-- Don't use a mix of integer and numeric keys for array items. -->
+    <rule ref="Universal.Arrays.MixedArrayKeyTypes"/>
+
+    <!-- Don't use a mix of keyed and unkeyed array items. -->
+    <rule ref="Universal.Arrays.MixedKeyedUnkeyedArray"/>
+
+    <!-- Enforce uppercase when using PHP native magic constants, like __FILE__ et al. -->
+    <rule ref="Universal.Constants.UppercaseMagicConstants"/>
+
+    <!-- Enforce the use of the boolean && and || operators instead of the logical and/or operators. -->
+    <rule ref="Universal.Operators.DisallowLogicalAndOr"/>
+
+    <!-- Flag unused use statements. -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
+
+    <!-- Use fully qualified names for global functions and constants. -->
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
+
+    <!-- Use import use statements for everything else. -->
+    <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+        <properties>
+            <property name="searchAnnotations" value="true"/>
+            <property name="allowFullyQualifiedGlobalFunctions" value="true"/>
+            <property name="allowFullyQualifiedGlobalConstants" value="true"/>
+        </properties>
+    </rule>
+</ruleset>

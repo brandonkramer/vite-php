@@ -1,0 +1,36 @@
+{
+  "name": "wp-strap/vite",
+  "description": "A collection of back-end utilities for WordPress development with ViteJS.",
+  "license": "BSD-2-Clause",
+  "autoload": {
+    "psr-4": {
+      "WPStrap\\Vite\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": ["src/"]
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+    "wp-coding-standards/wpcs": "*",
+    "slevomat/coding-standard": "~8.0",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "phpcsstandards/phpcsutils": "^1.0",
+    "phpcsstandards/phpcsextra": "^1.0",
+    "php-parallel-lint/php-parallel-lint": "^1.3",
+    "szepeviktor/phpstan-wordpress": "1.1.4.*",
+    "php-stubs/wordpress-stubs": "^5.7",
+    "roave/security-advisories": "dev-latest",
+    "captainhook/captainhook": "^5.10"
+  },
+  "scripts": {
+    "analyze": "@php ./vendor/bin/phpstan analyze",
+    "standards:check": "./vendor/bin/phpcs --standard=./phpcs.xml",
+    "syntax:check": "composer exec -- parallel-lint src/"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
