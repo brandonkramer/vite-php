@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Responsible for listening to Vite's dev server, loading
- * our source files and injecting scripts from the Vite dev server for HMR.
+ * Responsible for listening to Vite's dev server, loading the source files and
+ * injecting scripts from the Vite dev server for HMR.
  *
  * @package WPStrap/Vite
  */
@@ -19,9 +19,9 @@ class DevServer implements DevServerInterface
     /**
      * The assets.
      *
-     * @var AssetsServiceInterface
+     * @var AssetsInterface
      */
-    protected AssetsServiceInterface $assetsService;
+    protected AssetsInterface $assets;
 
     /**
      * The vite dev server port number.
@@ -33,9 +33,9 @@ class DevServer implements DevServerInterface
     /**
      * Inject dependencies.
      */
-    public function __construct(AssetsServiceInterface $assetsService)
+    public function __construct(AssetsInterface $assets)
     {
-        $this->assetsService = $assetsService;
+        $this->assets = $assets;
     }
 
     /**
@@ -54,7 +54,7 @@ class DevServer implements DevServerInterface
         if ($this->isViteClientActive()) {
             \add_action('wp_head', [$this, 'loadViteScript'], -99);
             \add_filter('script_loader_tag', [$this, 'loadScriptsAsModule'], 999, 3);
-            \add_filter("assets_{$this->assetsService->getHook()}_url", [$this, 'loadSourceFiles'], 99, 3);
+            \add_filter("assets_{$this->assets->getHook()}_url", [$this, 'loadSourceFiles'], 99, 3);
         }
     }
 
@@ -80,7 +80,7 @@ class DevServer implements DevServerInterface
      */
     public function loadScriptsAsModule(string $tag, string $handle, string $src): string
     {
-        return \strpos($src, "{$this->assetsService->getDirname()}/{$this->assetsService->getOutDir()}") !== false
+        return \strpos($src, "{$this->assets->getDirname()}/{$this->assets->getOutDir()}") !== false
             ? '<script type="module" src="' . \esc_url($src) . '"></script>' // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
             : $tag;
     }
@@ -97,7 +97,7 @@ class DevServer implements DevServerInterface
     public function loadSourceFiles(string $url, array $manifest, string $file): string
     {
         $sourceFile = $manifest['src'];
-        $sourceFilePath = "{$this->assetsService->getDir()}/{$this->assetsService->getRoot()}/{$sourceFile}";
+        $sourceFilePath = "{$this->assets->getDir()}/{$this->assets->getRoot()}/{$sourceFile}";
 
         if (!\is_readable($sourceFilePath)) {
             if (\strpos($sourceFilePath, '.css') !== false) {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The assets service.
+ * Responsible for configuration and getting of asset files through the manifest.json
  *
  * @package WPStrap/Vite
  */
@@ -13,7 +13,7 @@ namespace WPStrap\Vite;
 /**
  * Class AssetsService
  */
-class AssetsService implements AssetsServiceInterface
+class AssetsService implements AssetsInterface
 {
     /**
      * Internal cache.

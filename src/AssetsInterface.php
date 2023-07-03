@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The Assets Service Contract.
+ * Contract for the Assets Service.
  *
  * @package WPStrap/Vite
  */
@@ -11,9 +11,9 @@ declare(strict_types=1);
 namespace WPStrap\Vite;
 
 /**
- * Class AssetsServiceInterface
+ * Class AssetsInterface
  */
-interface AssetsServiceInterface
+interface AssetsInterface
 {
     /**
      * Set configurations.

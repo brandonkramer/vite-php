@@ -15,33 +15,33 @@ use RuntimeException;
 /**
  * Class Assets
  *
- * @method static AssetsServiceInterface get (string $file)
- * @method static AssetsServiceInterface css (string $entry, string $file)
- * @method static AssetsServiceInterface js (string $entry, string $file)
- * @method static AssetsServiceInterface image (string $entry, string $file)
- * @method static AssetsServiceInterface font (string $entry, string $file)
- * @method static AssetsServiceInterface svg (string $entry, string $file)
- * @method static AssetsServiceInterface getRoot ()
- * @method static AssetsServiceInterface getOutDir ()
- * @method static AssetsServiceInterface getEntry ()
+ * @method static AssetsInterface get (string $file)
+ * @method static AssetsInterface css (string $entry, string $file)
+ * @method static AssetsInterface js (string $entry, string $file)
+ * @method static AssetsInterface image (string $entry, string $file)
+ * @method static AssetsInterface font (string $entry, string $file)
+ * @method static AssetsInterface svg (string $entry, string $file)
+ * @method static AssetsInterface getRoot ()
+ * @method static AssetsInterface getOutDir ()
+ * @method static AssetsInterface getEntry ()
  */
 class Assets
 {
     /**
      * The assets service.
      *
-     * @var AssetsServiceInterface
+     * @var AssetsInterface
      */
-    protected static AssetsServiceInterface $assetsService;
+    protected static AssetsInterface $assets;
 
     /**
      * Inject dependencies.
      *
-     * @param AssetsServiceInterface $assetsService
+     * @param AssetsInterface $assets
      */
-    public function __construct(AssetsServiceInterface $assetsService)
+    public function __construct(AssetsInterface $assets)
     {
-        static::$assetsService = $assetsService;
+        static::$assets = $assets;
     }
 
     /**
@@ -56,11 +56,11 @@ class Assets
      */
     public static function __callStatic(string $method, array $args): string
     {
-        if (!isset(static::$assetsService)) {
+        if (!isset(static::$assets)) {
             throw new RuntimeException('[Vite] Assets service has not been set.');
         }
 
-        return static::$assetsService->{$method}(...$args);
+        return static::$assets->{$method}(...$args);
     }
 
     /**
@@ -70,6 +70,6 @@ class Assets
      */
     public static function devServer(): DevServerInterface
     {
-        return new DevServer(static::$assetsService);
+        return new DevServer(static::$assets);
     }
 }
