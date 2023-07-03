@@ -1,0 +1,30 @@
+# procssed files
+build/*
+
+# composer
+vendor
+composer.lock
+
+# node
+node_modules
+package-lock.json
+yarn.lock
+
+# tests
+/tests/build/
+/tests/Data/
+/tests/Codeception/_data/dump.sql
+.phpunit.result.cache
+/wp
+/wp-content
+
+# editor settings
+.vscode/settings.json
+.vscode/launch.json
+.idea/*
+
+# security stuff
+auth.json
+
+# misc
+.DS_Store
