@@ -28,6 +28,7 @@ But can be used with any ViteJS setups.
 The classes follow PSR practices with interfaces, so it can be included trough OOP with dependency injection and IoC containers. It also provides a Facade class that allows you to use static methods instead to call the methods everywhere you like.
 
 
+
 Example with using the facade:
 ```php
 use WPStrap\Vite\Assets;
@@ -41,15 +42,11 @@ Assets::register([
 // Listens to ViteJS dev server and makes adjustment to make HMR work
 Assets::devServer()->start();
 
-// Returns the compiled asset url from the build folder with HASH
-// OR returns the source file when ViteJS dev server is running.
-
-Assets::get('js/main.js') 
 // returns: https://your-site.com/wp-content/plugins/your-plugin/build/js/main.oi4h32d.js
+Assets::get('js/main.js') 
 
 // Alternatively you can use these as well which will be more targeted to specific folders
 // and for some of the methods you don't need to write the file extension
-
 Assets::js('main') 
 Assets::css('main') 
 Assets::image('bird-on-black.jpg') 
@@ -74,12 +71,6 @@ $assets = new AssetsService();
 $assets->register([
     'dir' => plugin_dir_path(__FILE__), // or get_stylesheet_directory() for themes
     'url' => plugins_url(\basename(__DIR__)) // or get_stylesheet_directory_uri() for themes
-]);
-
-// OR do it with one chain call
-$assets = (new AssetsService())->register([
-    'dir' => plugin_dir_path(__FILE__), 
-    'url' => plugins_url(\basename(__DIR__)) 
 ]);
 
 // Listens to ViteJS dev server and makes adjustment to make HMR work
@@ -149,7 +140,7 @@ $devServer->start();
 $assets->get('main/main.css');
 
 // You can also set a PSR container as a facade accessor
-Assets::setFacade($container);
+Assets::setFacadeAccessor($container);
 Assets::get('main/main.css')
 ```
 
@@ -159,7 +150,7 @@ Assets::get('main/main.css')
 
 The dev server class is responsible for listening to the ViteJS dev server using CURL, checking if it's running locally on port 3000 which you can adjust using the optional param from the start() method as seen above.
 
-If it can validate the dev server is running, it will inject viteJS scripts provided from the dev server, filter all asset urls and load source files instead (from the assets::get(), assets:css(), assets::js() methods),
+If it can validate the dev server is running, it will inject viteJS scripts provided from the dev server, filter all asset urls and load source files instead (from the assets::get(), assets:css(), assets::js() etc. methods),
 and alter the script tags to make sure the source files can be loaded as modules for HMR.
 
 **This should only be run on local/dev environments.** As it's using CURL on each request, so you don't want to run this on production.
