@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Responsible for configuration and getting of asset files through the manifest.json
+ * Responsible for configuration and getting asset files through the manifest.json
  *
  * @package WPStrap/Vite
  */
@@ -228,9 +228,7 @@ class AssetsService implements AssetsInterface
     }
 
     /**
-     * Get the project folder name
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getDirname(): string
     {

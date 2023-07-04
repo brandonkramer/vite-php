@@ -141,7 +141,6 @@ class DevServer implements DevServerInterface
         $errors = \curl_error($curl);
         $response = \curl_getinfo($curl, CURLINFO_HTTP_CODE);
         \curl_close($curl);
-
         // phpcs:enable
 
         return !($errors || $response !== 200);

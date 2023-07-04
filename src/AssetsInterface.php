@@ -40,7 +40,7 @@ interface AssetsInterface
      * Get the CSS url.
      *
      * @param string $entry Domain or file itself
-     * @param string $file File
+     * @param string $file File  Relative path to the asset file in the "src"/"root" folder
      *
      * @return string
      */
@@ -50,7 +50,7 @@ interface AssetsInterface
      * Get the JS url.
      *
      * @param string $entry Domain or file itself
-     * @param string $file File
+     * @param string $file File  Relative path to the asset file in the "src"/"root" folder
      *
      * @return string
      */
@@ -60,7 +60,7 @@ interface AssetsInterface
      * Get the image url.
      *
      * @param string $entry Domain or file itself
-     * @param string $file File
+     * @param string $file File  Relative path to the asset file in the "src"/"root" folder
      *
      * @return string
      */
@@ -70,7 +70,7 @@ interface AssetsInterface
      * Get the SVG url.
      *
      * @param string $entry Domain or file itself
-     * @param string $file File
+     * @param string $file File  Relative path to the asset file in the "src"/"root" folder
      *
      * @return string
      */
@@ -80,7 +80,7 @@ interface AssetsInterface
      * Get the font url.
      *
      * @param string $entry Domain or file itself
-     * @param string $file File
+     * @param string $file File  Relative path to the asset file in the "src"/"root" folder
      *
      * @return string
      */
