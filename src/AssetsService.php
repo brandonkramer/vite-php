@@ -121,7 +121,7 @@ class AssetsService implements AssetsInterface
         if (!empty($file)) {
             return $this->get("{$entry}/{$this->getEntry()}/css/{$file}.css");
         } else {
-            return $this->get("css/{$entry}");
+            return $this->get("css/{$entry}.css");
         }
     }
 
@@ -133,7 +133,7 @@ class AssetsService implements AssetsInterface
         if (!empty($file)) {
             return $this->get("{$entry}/{$this->getEntry()}/js/{$file}.js");
         } else {
-            return $this->get("js/{$entry}");
+            return $this->get("js/{$entry}.js");
         }
     }
 
@@ -157,7 +157,7 @@ class AssetsService implements AssetsInterface
         if (!empty($file)) {
             return $this->get("{$entry}/{$this->getEntry()}/svg/{$file}.svg");
         } else {
-            return $this->get("svg/{$entry}");
+            return $this->get("svg/{$entry}.svg");
         }
     }
 
