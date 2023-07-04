@@ -11,17 +11,17 @@
     "classmap": ["src/"]
   },
   "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "wp-coding-standards/wpcs": "*",
-    "slevomat/coding-standard": "~8.0",
+    "slevomat/coding-standard": "~8.13.1",
     "phpcompatibility/phpcompatibility-wp": "*",
-    "phpcsstandards/phpcsutils": "^1.0",
-    "phpcsstandards/phpcsextra": "^1.0",
+    "phpcsstandards/phpcsutils": "^1.0.6",
+    "phpcsstandards/phpcsextra": "^1.0.4",
     "php-parallel-lint/php-parallel-lint": "^1.3",
-    "szepeviktor/phpstan-wordpress": "1.1.4.*",
-    "php-stubs/wordpress-stubs": "^5.7",
+    "szepeviktor/phpstan-wordpress": "^1.3.0",
+    "php-stubs/wordpress-stubs": "^6.2.1",
     "roave/security-advisories": "dev-latest",
-    "captainhook/captainhook": "^5.10"
+    "captainhook/captainhook": "^5.16"
   },
   "scripts": {
     "install:captainhook": "vendor/bin/captainhook install",
@@ -33,5 +33,8 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "require": {
+    "psr/container": "^1.1"
   }
 }

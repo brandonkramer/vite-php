@@ -109,7 +109,7 @@ class AssetsService implements AssetsInterface
          * @param array<string, string|string[]|bool> $manifest The manifest data of the asset.
          * @param string $file Relative path to the asset file in the "src" folder.
          */
-        return \apply_filters("assets_{$this->getHook()}_url", $url, $manifest, $file); /** @phpstan-ignore-line */
+        return \apply_filters("assets_{$this->getHook()}_url", $url, $manifest, $file);
     }
 
 
@@ -206,7 +206,7 @@ class AssetsService implements AssetsInterface
          * @param array<string, string|string[]|bool|array<string, string|string[]|bool>> $manifest The manifest data.
          * @param string $key The key we're requesting.
          */
-        static::$cache['manifest'] = \apply_filters("assets_{$this->getHook()}_manifest", static::$cache['manifest'], $key); /** @phpstan-ignore-line */
+        static::$cache['manifest'] = \apply_filters("assets_{$this->getHook()}_manifest", static::$cache['manifest'], $key);
 
         if (empty($key)) {
             return static::$cache['manifest'];
