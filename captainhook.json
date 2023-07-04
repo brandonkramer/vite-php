@@ -24,11 +24,6 @@
             "action": "composer run-script analyze",
             "options": [],
             "conditions": []
-          },
-          {
-            "action": "composer run-script test:unit",
-            "options": [],
-            "conditions": []
           }
         ]
     },

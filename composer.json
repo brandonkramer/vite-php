@@ -24,6 +24,7 @@
     "captainhook/captainhook": "^5.10"
   },
   "scripts": {
+    "install:captainhook": "vendor/bin/captainhook install",
     "analyze": "@php ./vendor/bin/phpstan analyze",
     "standards:check": "./vendor/bin/phpcs --standard=./phpcs.xml",
     "syntax:check": "composer exec -- parallel-lint src/"

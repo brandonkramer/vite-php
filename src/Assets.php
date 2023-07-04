@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace WPStrap\Vite;
 
-use RuntimeException;
-
 /**
  * Class Assets
  *
@@ -56,16 +54,10 @@ class Assets
      * @param array<string|int, mixed> $args
      *
      * @return mixed
-     *
-     * @throws RuntimeException
      */
     public static function __callStatic(string $method, array $args)
     {
-        $instance = static::resolveInstance();
-
-        if (!isset($instance)) {
-            throw new RuntimeException('[Vite] Assets service could not be resolved.');
-        }
+        static::resolveInstance();
 
         return static::$assets->{$method}(...$args);
     }
