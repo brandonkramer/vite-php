@@ -80,21 +80,48 @@ class Assets
      */
     protected static function resolveInstance(): ?AssetsInterface
     {
-        if (!isset(static::$assets)) {
-            if (isset(static::$container)) {
-                if (static::$container->has(AssetsInterface::class)) {
-                    static::$assets = static::resolveFacadeInstance(AssetsInterface::class);
-                }
-                if (static::$container->has(DevServerInterface::class)) {
-                    static::$devServer = static::resolveFacadeInstance(DevServerInterface::class);
-                }
-            } else {
-                static::$assets = new AssetsService();
-                static::$devServer = new DevServer(static::$assets);
-            }
+        if (!isset(static::$assets) && !isset(static::$container)) {
+            static::$assets = new AssetsService();
+            static::$devServer = new DevServer(static::$assets);
         }
 
         return static::$assets;
+    }
+
+    /**
+     * Set facade(s).
+     *
+     * @param AssetsInterface | DevServerInterface ...$instances
+     *
+     * @return void
+     */
+    public static function setFacade(...$instances)
+    {
+        foreach ($instances as $instance) {
+            if ($instance instanceof AssetsInterface) {
+                static::$assets = $instance;
+            } elseif ($instance instanceof DevServerInterface) {
+                static::$devServer = $instance;
+            }
+        }
+    }
+
+    /**
+     * Set facade accessor.
+     *
+     * @param ContainerInterface $container
+     *
+     * @return void
+     */
+    public static function setFacadeAccessor(ContainerInterface $container)
+    {
+        static::$container = $container;
+
+        foreach ([AssetsInterface::class, DevServerInterface::class] as $interface) {
+            if (static::$container->has($interface)) {
+                static::setFacade(static::resolveFacadeAccessor($interface));
+            }
+        }
     }
 
     /**
@@ -104,7 +131,7 @@ class Assets
      *
      * @return mixed|void
      */
-    protected static function resolveFacadeInstance(string $id)
+    protected static function resolveFacadeAccessor(string $id)
     {
         try {
             return static::$container->get($id);
@@ -115,26 +142,6 @@ class Assets
                 if (\defined('WP_DEBUG_LOG') && \WP_DEBUG_LOG) {
                     \error_log(\esc_html($e->getMessage())); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                 }
-            }
-        }
-    }
-
-    /**
-     * Set facade(s).
-     *
-     * @param ContainerInterface | AssetsInterface | DevServerInterface ...$instances
-     *
-     * @return void
-     */
-    public static function setFacade(...$instances)
-    {
-        foreach ($instances as $instance) {
-            if ($instance instanceof ContainerInterface) {
-                static::$container = $instance;
-            } elseif ($instance instanceof AssetsInterface) {
-                static::$assets = $instance;
-            } elseif ($instance instanceof DevServerInterface) {
-                static::$devServer = $instance;
             }
         }
     }
