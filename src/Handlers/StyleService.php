@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Responsible for providing script functions.
+ * Responsible for providing style functions.
  *
  * @package WPStrap/Vite
  */
 
 declare(strict_types=1);
 
-namespace WPStrap\Vite;
+namespace WPStrap\Vite\Handlers;
 
 /**
- * Class ScriptService
+ * Class StyleService
  */
-class ScriptService implements ScriptInterface
+class StyleService implements StyleInterface
 {
     /**
      * Script handle.
@@ -33,12 +33,35 @@ class ScriptService implements ScriptInterface
     /**
      * @inheritDoc
      */
-    public function prependInline(string $code): self
+    public function asAlternate(): self
     {
-        if ((\wp_scripts()->add_data($this->handle, 'before', $code)) === false) {
+        if ((\wp_styles()->add_data($this->handle, 'alt', true)) === false) {
             $error = \sprintf(
-            /* translators: %1$s will be replaced with a script handle name. */
-                \esc_html__('Failed to prepend inline script for: %s.'),
+            /* translators: %1$s will be replaced with a style handle name. */
+                \esc_html__('Failed to add alternate for: %s.'),
+                $this->handle
+            );
+            if (\defined('WP_DEBUG') && \WP_DEBUG) {
+                \wp_die(\esc_html($error));
+            } else {
+                if (\defined('WP_DEBUG_LOG') && \WP_DEBUG_LOG) {
+                    \error_log(\esc_html($error)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function withTitle(string $title): self
+    {
+        if ((\wp_styles()->add_data($this->handle, 'title', $title)) === false) {
+            $error = \sprintf(
+            /* translators: %1$s will be replaced with a style handle name. */
+                \esc_html__('Failed to add title for: %s.'),
                 $this->handle
             );
             if (\defined('WP_DEBUG') && \WP_DEBUG) {
@@ -58,10 +81,10 @@ class ScriptService implements ScriptInterface
      */
     public function appendInline(string $code): self
     {
-        if ((\wp_scripts()->add_data($this->handle, 'after', $code)) === false) {
+        if ((\wp_add_inline_style($this->handle, $code)) === false) {
             $error = \sprintf(
-            /* translators: %1$s will be replaced with a script handle name. */
-                \esc_html__('Failed to append inline script for: %s.'),
+            /* translators: %1$s will be replaced with a style handle name. */
+                \esc_html__('Failed to append inline for: %s.'),
                 $this->handle
             );
             if (\defined('WP_DEBUG') && \WP_DEBUG) {
@@ -72,49 +95,6 @@ class ScriptService implements ScriptInterface
                 }
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function localize(string $objectName, array $data): self
-    {
-        if ((\wp_localize_script($this->handle, $objectName, $data)) === false) {
-            $error = \sprintf(
-            /* translators: %1$s will be replaced with a script handle name. */
-                \esc_html__('Failed to localize script for: %s.'),
-                $this->handle
-            );
-            if (\defined('WP_DEBUG') && \WP_DEBUG) {
-                \wp_die(\esc_html($error));
-            } else {
-                if (\defined('WP_DEBUG_LOG') && \WP_DEBUG_LOG) {
-                    \error_log(\esc_html($error)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function useAsync(): self
-    {
-        $this->setAttribute('async');
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function useDefer(): self
-    {
-        $this->setAttribute('defer');
 
         return $this;
     }
@@ -139,11 +119,11 @@ class ScriptService implements ScriptInterface
      */
     private function setAttribute(string $name, string $value = '')
     {
-        \add_filter('script_loader_tag', function ($tag, $handle) use ($name, $value) {
+        \add_filter('style_loader_tag', function ($tag, $handle) use ($name, $value) {
             $attribute = empty($value) ? $name : "{$name}=\"{$value}\"";
 
             if ($handle === $this->handle) {
-                return \str_replace('<script ', "<script {$attribute} ", $tag);
+                return \str_replace('<link ', "<link {$attribute} ", $tag);
             }
 
             return $tag;

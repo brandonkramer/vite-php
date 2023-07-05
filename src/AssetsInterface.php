@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace WPStrap\Vite;
 
+use WPStrap\Vite\Handlers\ScriptInterface;
+use WPStrap\Vite\Handlers\StyleInterface;
+
 /**
  * Class AssetsInterface
  */

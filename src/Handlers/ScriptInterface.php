@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace WPStrap\Vite;
+namespace WPStrap\Vite\Handlers;
 
 /**
  * Class ScriptInterface
