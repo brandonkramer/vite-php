@@ -79,9 +79,9 @@ class AssetsService implements AssetsInterface
     /**
      * Dependency map
      *
-     * @var null|string|array<string|int, string|string[]>
+     * @var array<string|int, string|string[]>
      */
-    protected $deps;
+    protected array $deps;
 
     /**
      * @inheritDoc
@@ -90,7 +90,7 @@ class AssetsService implements AssetsInterface
     {
         foreach (['dir', 'url', 'hook', 'root', 'outDir', 'entry', 'version', 'deps'] as $key) {
             if (isset($config[$key])) {
-                $this->{$key} = \is_string($config[$key]) ? \untrailingslashit($config[$key]) : $key;
+                $this->{$key} = \is_string($config[$key]) ? \untrailingslashit($config[$key]) : $config[$key];
             }
         }
 
@@ -205,15 +205,11 @@ class AssetsService implements AssetsInterface
      */
     public function deps(string $key = ''): array
     {
-        if (!isset($this->deps)) {
-            return [];
+        if (empty($key)) {
+            return $this->deps;
         }
 
-        if (\is_string($this->deps)) {
-            return [$this->deps];
-        }
-
-        return !empty($key) ? $this->deps[$key] : $this->deps;
+        return $this->deps[$key] ?? [];
     }
 
     /**
