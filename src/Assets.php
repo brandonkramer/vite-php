@@ -14,6 +14,8 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use RuntimeException;
+use WPStrap\Vite\Handlers\ScriptInterface;
+use WPStrap\Vite\Handlers\StyleInterface;
 
 /**
  * Class Assets
@@ -27,10 +29,10 @@ use RuntimeException;
  * @method static AssetsInterface svg(string $entry, string $file = '')
  * @method static AssetsInterface version()
  * @method static AssetsInterface deps(string $key = '')
- * @method static AssetsInterface enqueueScript(string $handle, string $file ='', array $deps =[], bool $footer = true)
- * @method static AssetsInterface registerScript(string $handle, string $file ='', array $deps =[], bool $footer = true)
- * @method static AssetsInterface enqueueStyle(string $handle, string $file ='', array $deps =[], string $media = 'all')
- * @method static AssetsInterface registerStyle(string $handle, string $file ='', array $deps =[], string $media = 'all')
+ * @method static ScriptInterface enqueueScript(string $handle, string $file ='', array $deps =[], bool $footer = true)
+ * @method static ScriptInterface registerScript(string $handle, string $file ='', array $deps =[], bool $footer = true)
+ * @method static StyleInterface enqueueStyle(string $handle, string $file ='', array $deps =[], string $media = 'all')
+ * @method static StyleInterface registerStyle(string $handle, string $file ='', array $deps =[], string $media = 'all')
  * @method static AssetsInterface getRoot()
  * @method static AssetsInterface getOutDir()
  * @method static AssetsInterface getEntry()

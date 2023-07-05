@@ -169,9 +169,6 @@
     <!-- Enforce the use of the boolean && and || operators instead of the logical and/or operators. -->
     <rule ref="Universal.Operators.DisallowLogicalAndOr"/>
 
-    <!-- Flag unused use statements. -->
-    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
-
     <!-- Use fully qualified names for global functions and constants. -->
     <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants"/>
     <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>

@@ -35,7 +35,7 @@ class ScriptService implements ScriptInterface
      */
     public function prependInline(string $code): self
     {
-        if ((\wp_scripts()->add_data($this->handle, 'before', $code)) === false) {
+        if (( \wp_add_inline_script($this->handle, 'before', $code)) === false) {
             $error = \sprintf(
             /* translators: %1$s will be replaced with a script handle name. */
                 \esc_html__('Failed to prepend inline script for: %s.'),
@@ -58,7 +58,7 @@ class ScriptService implements ScriptInterface
      */
     public function appendInline(string $code): self
     {
-        if ((\wp_scripts()->add_data($this->handle, 'after', $code)) === false) {
+        if (( \wp_add_inline_script($this->handle, 'after', $code)) === false) {
             $error = \sprintf(
             /* translators: %1$s will be replaced with a script handle name. */
                 \esc_html__('Failed to append inline script for: %s.'),
