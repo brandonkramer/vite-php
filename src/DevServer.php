@@ -80,7 +80,7 @@ class DevServer implements DevServerInterface
      */
     public function loadScriptsAsModule(string $tag, string $handle, string $src): string
     {
-        return \strpos($src, "{$this->assets->getDirname()}/{$this->assets->getOutDir()}") !== false
+        return \strpos($src, $this->getViteLocalUrl()) !== false
             ? '<script type="module" src="' . \esc_url($src) . '"></script>' // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
             : $tag;
     }
@@ -109,14 +109,23 @@ class DevServer implements DevServerInterface
     }
 
     /**
-     * Get the local vite client URL that will be exposed when the Vite dev server
-     * is running.
+     * Get the local vite URL that will be exposed when the Vite dev server is running.
+     *
+     * @return string
+     */
+    protected function getViteLocalUrl(): string
+    {
+        return \get_home_url() . ":{$this->portNumber}";
+    }
+
+    /**
+     * Get the vite client URL that will be exposed when the Vite dev server is running.
      *
      * @return string
      */
     protected function getViteClientUrl(): string
     {
-        return \get_home_url() . ":{$this->portNumber}/@vite/client";
+        return $this->getViteLocalUrl() . '/@vite/client';
     }
 
     /**
@@ -141,6 +150,7 @@ class DevServer implements DevServerInterface
         $errors = \curl_error($curl);
         $response = \curl_getinfo($curl, CURLINFO_HTTP_CODE);
         \curl_close($curl);
+
         // phpcs:enable
 
         return !($errors || $response !== 200);

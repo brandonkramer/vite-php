@@ -4,7 +4,7 @@
   </a>
   <h1>Vite PHP</h1>
   <p>
-A collection of back-end/PHP utilities for WordPress development with ViteJS.
+A library of back-end/PHP utilities for WordPress development with ViteJS.
 
 You can read more about ViteJS on [vitejs.dev](https://vitejs.dev)
 </p>
