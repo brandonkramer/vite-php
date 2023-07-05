@@ -18,10 +18,7 @@ interface AssetsInterface
     /**
      * Set configurations.
      *
-     * @param array<string, string> $config [
-     * 'dir' => (string),
-     * 'url' => (string)
-     * ]
+     * @param array<string, string|array<string|int, string|string[]>> $config
      *
      * @return self
      */
@@ -87,6 +84,22 @@ interface AssetsInterface
     public function font(string $entry, string $file = ''): string;
 
     /**
+     * Version to use for asset handlers.
+     *
+     * @return string|false
+     */
+    public function version();
+
+    /**
+     * Get asset dependencies.
+     *
+     * @param string $key
+     *
+     * @return string[]
+     */
+    public function deps(string $key = ''): array;
+
+    /**
      * The dir of the project.
      *
      * @return string
@@ -134,4 +147,52 @@ interface AssetsInterface
      * @return string
      */
     public function __toString();
+
+    /**
+     * Enqueue script.
+     *
+     * @param string $handle
+     * @param string[]|string $file
+     * @param string[] $deps
+     * @param bool $footer
+     *
+     * @return ScriptInterface
+     */
+    public function enqueueScript(string $handle, $file = '', array $deps = [], bool $footer = true): ScriptInterface;
+
+    /**
+     * Register script.
+     *
+     * @param string $handle
+     * @param string[]|string $file
+     * @param string[] $deps
+     * @param bool $footer
+     *
+     * @return ScriptInterface
+     */
+    public function registerScript(string $handle, $file = '', array $deps = [], bool $footer = true): ScriptInterface;
+
+    /**
+     * Enqueue style.
+     *
+     * @param string $handle
+     * @param string[]|string $file
+     * @param string[] $deps
+     * @param string $media
+     *
+     * @return StyleInterface
+     */
+    public function enqueueStyle(string $handle, $file = '', array $deps = [], string $media = 'all'): StyleInterface;
+
+    /**
+     * Register style.
+     *
+     * @param string $handle
+     * @param string[]|string $file
+     * @param string[] $deps
+     * @param string $media
+     *
+     * @return StyleInterface
+     */
+    public function registerStyle(string $handle, $file = '', array $deps = [], string $media = 'all'): StyleInterface;
 }
