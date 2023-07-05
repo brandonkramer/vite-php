@@ -314,8 +314,8 @@ class AssetsService implements AssetsInterface
     public function enqueueStyle(string $handle, $file = '', array $deps = [], string $media = 'all'): StyleInterface
     {
         $file = \is_array($file)
-            ? $this->js($file[0], $file[1])
-            : $this->js($file);
+            ? $this->css($file[0], $file[1])
+            : $this->css($file);
 
         \wp_enqueue_style($handle, $file, \array_merge($this->deps('styles'), $deps), $this->version(), $media);
 
@@ -328,8 +328,8 @@ class AssetsService implements AssetsInterface
     public function registerStyle(string $handle, $file = '', array $deps = [], string $media = 'all'): StyleInterface
     {
         $file = \is_array($file)
-            ? $this->js($file[0], $file[1])
-            : $this->js($file);
+            ? $this->css($file[0], $file[1])
+            : $this->css($file);
 
         \wp_register_style($handle, $file, \array_merge($this->deps('styles'), $deps), $this->version(), $media);
 
