@@ -1,3 +1,5 @@
+Project has been taken to: https://github.com/mrOttoW/vite-wordpress-php
+
 <div align="center">
   <a href="https://vitejs.dev/">
     <img width="200" height="200" hspace="10" src="https://vitejs.dev/logo.svg" alt="vite logo" />
